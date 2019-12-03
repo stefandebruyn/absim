@@ -9,6 +9,15 @@ from prob_prox_agent import ProbProxAgent
 from salesman_agent import SalesmanAgent
 
 
+agent_lookup = {
+    "prob" : ProbAgent,
+    "prox" : ProxAgent,
+    "prob_prox" : ProbProxAgent,
+    "salesman" : SalesmanAgent,
+    "bayes" : BayesianAgent
+}
+
+
 def parse_world(fname):
     """Parses a scavenger hunt world from a datfile.
 
@@ -140,13 +149,6 @@ def simulate(world, hunt, start_loc, args):
     total_distance = 0
     total_runtime = 0
     trials = args.trials
-    agent_lookup = {
-        "prob" : ProbAgent,
-        "prox" : ProxAgent,
-        "prob_prox" : ProbProxAgent,
-        "salesman" : SalesmanAgent,
-        "bayes" : BayesianAgent
-    }
     agent = agent_lookup[args.agent](world, hunt, world.node_id(start_loc))
     agent.epoch()
 
@@ -160,6 +162,7 @@ def simulate(world, hunt, start_loc, args):
         agent.setup()
         t_start = time.time()
         while not agent.done():
+            agent.objects_at_loc = world.objs_at(agent.loc)
             agent.run()
         t_end = time.time()
         total_distance += agent.travel_distance

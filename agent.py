@@ -27,6 +27,7 @@ class Agent:
         self.found = [False] * len(self.hunt)
         self.path = [self.loc]
         self.arrangement_space = world.ArrangementSpace(self.world)
+        self.objects_at_loc = []
 
     def done(self):
         """Returns if the hunt has been completed.
@@ -45,9 +46,8 @@ class Agent:
         """Collects objects at the current location and removes them from
         the hunt list.
         """
-        objs = self.world.objs_at(self.loc)
         for i in range(len(self.hunt)):
-            if not self.found[i] and self.hunt[i] in objs:
+            if not self.found[i] and self.hunt[i] in self.objects_at_loc:
                 self.found[i] = True
 
     def go(self, loc):
