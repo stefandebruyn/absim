@@ -1,4 +1,4 @@
-import world
+import absim.world as world
 
 
 class Agent:
@@ -70,7 +70,7 @@ class Agent:
         # Make observations at the current location
         if self.visited_count[self.loc] == 1:
             expected_objs = self.arrangement_space.pot_objs_at(self.loc)
-            actual_objs = self.world.objs_at(self.loc)
+            actual_objs = self.objects_at_loc
 
             for expected_obj in expected_objs:
                 seen = expected_obj in actual_objs

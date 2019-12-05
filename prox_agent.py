@@ -1,4 +1,4 @@
-import prob_agent
+import absim.prob_agent as prob_agent
 
 
 class ProxAgent(prob_agent.ProbAgent):

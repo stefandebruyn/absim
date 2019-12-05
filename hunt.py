@@ -1,12 +1,12 @@
 import argparse
 import time
-import world
+import absim.world as world
 
-from bayesian_agent import BayesianAgent
-from prob_agent import ProbAgent
-from prox_agent import ProxAgent
-from prob_prox_agent import ProbProxAgent
-from salesman_agent import SalesmanAgent
+from absim.bayesian_agent import BayesianAgent
+from absim.prob_agent import ProbAgent
+from absim.prox_agent import ProxAgent
+from absim.prob_prox_agent import ProbProxAgent
+from absim.salesman_agent import SalesmanAgent
 
 
 agent_lookup = {
