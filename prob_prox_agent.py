@@ -16,7 +16,7 @@ class ProbProxAgent(agent.Agent):
         best_node_path = None
         for node in self.world.graph.nodes:
             if not self.visited(node):
-                prob_nothing_here = 1;
+                prob_nothing_here = 1
                 pot_objs = self.arrangement_space.pot_objs_at(node)
                 path = self.world.graph.shortest_path(self.loc, node)
                 # score is the expected wasted distance of going to that node
