@@ -11,7 +11,7 @@ In general:
 import copy
 import math
 import random
-import util
+import absim.util as util
 
 
 class Path:

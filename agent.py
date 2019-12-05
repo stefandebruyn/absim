@@ -1,4 +1,4 @@
-import world
+import absim.world as world
 
 
 class Agent:
@@ -27,6 +27,7 @@ class Agent:
         self.found = [False] * len(self.hunt)
         self.path = [self.loc]
         self.arrangement_space = world.ArrangementSpace(self.world)
+        self.objs_at_loc = []
 
     def done(self):
         """Returns if the hunt has been completed.
@@ -45,9 +46,8 @@ class Agent:
         """Collects objects at the current location and removes them from
         the hunt list.
         """
-        objs = self.world.objs_at(self.loc)
         for i in range(len(self.hunt)):
-            if not self.found[i] and self.hunt[i] in objs:
+            if not self.found[i] and self.hunt[i] in self.objs_at_loc:
                 self.found[i] = True
 
     def go(self, loc):
@@ -70,7 +70,7 @@ class Agent:
         # Make observations at the current location
         if self.visited_count[self.loc] == 1:
             expected_objs = self.arrangement_space.pot_objs_at(self.loc)
-            actual_objs = self.world.objs_at(self.loc)
+            actual_objs = self.objs_at_loc
 
             for expected_obj in expected_objs:
                 seen = expected_obj in actual_objs

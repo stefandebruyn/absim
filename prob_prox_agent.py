@@ -1,5 +1,5 @@
-import agent
-import world
+import absim.agent as agent
+import absim.world as world
 
 
 class ProbProxAgent(agent.Agent):

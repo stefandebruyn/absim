@@ -1,13 +1,13 @@
-import agent
-import hunt
+import absim.agent as agent
+import absim.hunt as hunt
 import unittest
-import util
-import world
+import absim.util as util
+import absim.world as world
 
-from bayesian_agent import BayesianAgent
-from prob_agent import ProbAgent
-from prox_agent import ProxAgent
-from salesman_agent import SalesmanAgent
+from absim.bayesian_agent import BayesianAgent
+from absim.prob_agent import ProbAgent
+from absim.prox_agent import ProxAgent
+from absim.salesman_agent import SalesmanAgent
 
 
 class GraphTests(unittest.TestCase):
