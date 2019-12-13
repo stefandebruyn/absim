@@ -397,6 +397,17 @@ class ArrangementSpace:
                         objs.append(event.obj)
         return objs
 
+    def prob_any_obj(self, loc):
+        """Returns the probability of any object occurring at LOC.
+        """
+        prob_no_obj = 1
+        # The probability of finding any object is one minus the product of all
+        # the probabilities of the objects not appearing at this location
+        for pot_obj in self.pot_objs_at(loc):
+            prob_no_obj *= 1 - self.prob_obj(pot_obj, loc)
+            
+        return 1 - prob_no_obj
+
     def update_prob(self, obj, loc, p):
         """Changes the probability of OBJ appearing at LOC to p. Should not be
         called manually.
