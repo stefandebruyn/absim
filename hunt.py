@@ -3,6 +3,7 @@ import time
 import absim.world as world
 
 from absim.bayesian_agent import BayesianAgent
+from absim.optimal_agent import OptimalAgent
 from absim.prob_agent import ProbAgent
 from absim.prox_agent import ProxAgent
 from absim.prob_prox_agent import ProbProxAgent
@@ -14,7 +15,8 @@ agent_lookup = {
     "prox" : ProxAgent,
     "prob_prox" : ProbProxAgent,
     "salesman" : SalesmanAgent,
-    "bayes" : BayesianAgent
+    "bayes" : BayesianAgent,
+    "optimal" : OptimalAgent
 }
 
 
@@ -43,6 +45,7 @@ def parse_world(fname):
     node_count = 0
     distrs = []
     hunt = []
+    arrangement = []
 
     for line in src.readlines():
         # Blank lines and comments
@@ -106,6 +109,12 @@ def parse_world(fname):
                 ind = prob_ind + 1
 
             distrs.append(world.Distribution(events))
+        # Arrangement override section
+        elif sec == "arr":
+            args = line.split()
+            assert len(args) == 2
+            obj, loc = args[0], args[1]
+            arrangement.append((obj, loc))
         else:
             assert False
 
@@ -123,6 +132,17 @@ def parse_world(fname):
     # Build world
     w = world.World(g, distrs)
     w.finalize()
+
+    # Override arrangement
+    if len(arrangement) > 0:
+        w.arrangement_override = True
+        w.arrangement = []
+        w.occurrences = {}
+        for loc in w.graph.nodes:
+            w.occurrences[loc] = []
+        for event in arrangement:
+            obj, loc = event
+            w.occurrences[w.node_id(loc)].append(obj)
 
     return w, hunt, start_loc
 

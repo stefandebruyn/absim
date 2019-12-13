@@ -475,12 +475,17 @@ class World:
         self.probs = {}  # (obj, loc) -> P of finding obj at loc
         self.pot_objs = {}  # Loc -> potential objects to find at loc
         self.finalized = False
+        self.arrangement_override = False
 
     def populate(self):
         """Creates a random internal arrangement according to the world's object
         distributions. This arrangement should not be accessed by scavenger
         hunt algorithms (with the exception of offline optimal).
         """
+        # Don't populate if the user opted to override the arrangement
+        if self.arrangement_override:
+            return
+
         assert self.finalized
         self.arrangement = []  # Clear arrangement
         self.occurrences = {}  # Clear occurrences
