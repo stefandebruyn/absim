@@ -26,7 +26,6 @@ class OptimalAgent(agent.Agent):
         self.optimal_path = None
         best_cost = -1
         for path in self.all_paths:
-            path = self.world.graph.stitch_path(path)
             cost = 0
             unvisited = needed_locs.copy()
             i = 0
@@ -34,14 +33,16 @@ class OptimalAgent(agent.Agent):
                 loc = path[i]
                 if loc in unvisited:
                     unvisited.remove(loc)
-                if i < len(path) - 1:
-                    cost += self.world.cost(loc, path[i + 1])
+                if i < len(path) - 1 and len(unvisited) > 0:
+                    cost += \
+                        self.world.graph.shortest_path(loc, path[i + 1]).cost
                     i += 1
             if self.optimal_path is None or cost < best_cost:
                 self.optimal_path = path
                 best_cost = cost
         assert self.optimal_path is not None
 
+        self.optimal_path = self.world.graph.stitch_path(self.optimal_path)
         self.path_index = 1
 
     def run(self):
