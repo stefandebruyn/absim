@@ -22,6 +22,8 @@ def distribute(count):
             p = 100 - p_total
         p_total += p
         d.append(p)
+    while 0 in d:
+        d.remove(0)
     return d
 
 
@@ -50,7 +52,7 @@ def generate(fname, nodes_range, cost_range, objects_range, occurrences_range):
         occurrences = random.randint(occurrences_range[0], occurrences_range[1])
         locs = nodes.copy()
         p = distribute(occurrences)
-        for j in range(occurrences):
+        for j in range(len(p)):
             out.write("%s %s " % (sample(locs), p[j] / 100))
         out.write("\n")
 

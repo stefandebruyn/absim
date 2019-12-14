@@ -405,7 +405,7 @@ class ArrangementSpace:
         # the probabilities of the objects not appearing at this location
         for pot_obj in self.pot_objs_at(loc):
             prob_no_obj *= 1 - self.prob_obj(pot_obj, loc)
-            
+
         return 1 - prob_no_obj
 
     def update_prob(self, obj, loc, p):

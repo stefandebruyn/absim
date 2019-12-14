@@ -45,7 +45,7 @@ def parse_world(fname):
     node_count = 0
     distrs = []
     hunt = []
-    arrangement = []
+    arrangement = [] # 2-tuples (obj, loc)
 
     for line in src.readlines():
         # Blank lines and comments

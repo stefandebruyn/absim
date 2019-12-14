@@ -9,6 +9,8 @@ class ProbProxAgent(agent.Agent):
     """
     def setup(self):
         super().setup()
+        self.active_path = None
+        self.active_path_index = 1
 
     def choose_next_path(self):
         best_node = None
@@ -30,7 +32,7 @@ class ProbProxAgent(agent.Agent):
                     best_node_score = score
                     best_node_path = path
         assert best_node is not None
-        return best_node_path
+        return best_node_path.nodes
 
     def run(self):
         # Collect objects at current location and update the occurrence space
@@ -39,9 +41,11 @@ class ProbProxAgent(agent.Agent):
         if self.done():
             return
 
-        # if self.active_path is None or \
-        #    self.active_path_index == len(self.active_path):
-        new_path = self.choose_next_path()
+        if self.active_path is None or \
+                self.active_path_index == len(self.active_path):
+           self.active_path = self.choose_next_path()
+           self.active_path_index = 1
 
         # Visit next location in the active path
-        self.go(new_path.nodes[1])
+        self.go(self.active_path[self.active_path_index])
+        self.active_path_index += 1
