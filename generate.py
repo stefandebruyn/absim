@@ -37,12 +37,21 @@ def generate(fname, nodes_range, cost_range, objects_range, occurrences_range):
     nodes = []
     for i in range(c_nodes):
         node = "l%s" % i
-        for j in range(i + 1, c_nodes):
-            cost = random.randint(cost_range[0], cost_range[1])
+
+        # Generate a random point
+        point = (random.randrange(0, 500, 1), random.randrange(0, 500, 1))
+        index = 0
+
+        # Get distances between each point
+        for point2 in points:
+            cost = math.sqrt((point2[0] - point[0])**2 + (point2[1] - point[1])**2)
             start = "*" if not start_marked else ""
-            out.write("%s%s l%s %s\n" % (node, start, j, cost))
             start_marked = True
+            out.write("%s%s l%s %s\n" %(node, start, index, cost))
+            index = index + 1
+
         nodes.append(node)
+        points.append(point)
 
     # Distribution
     out.write("\n[distr]\n")
